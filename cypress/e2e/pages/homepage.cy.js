@@ -1,4 +1,5 @@
 import login, { isLoginButtonVisibleEnabled } from '../components/login';
+import signUpPage from '../components/registration-page';
 
 describe('Casa Ideas - Homepage test suite', () => {
 
@@ -19,8 +20,13 @@ it('TC_02: User is able to click in Login button', () => {
   cy.url().should('include', '/login');
 });
 
-it('TC_03: Valid sign up', () => {
+it.only('TC_03: Valid sign up', () => {
   login.clickLoginButton();
+  login.clickSignUpButton();
+  signUpPage.fillRegisterForm();
+  signUpPage.agreeToTerms();
+  signUpPage.submitSignUpForm();
+  signUpPage.elements.getSuccessfulRegistrationMessage().should('be.visible');
 });
 
 
