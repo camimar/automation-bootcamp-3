@@ -3,7 +3,6 @@ import signUpPage from '../components/registration-page';
 
 describe('Casa Ideas - Homepage test suite', () => {
     beforeEach(() => {
-      cy.viewport('iphone-xr');
       cy.visit('/');
       cy.acceptCookiesIfExists();
      //entrar directo al login en una prueba e iniciar sesion https://www.casaideas-mexico.mx/login
