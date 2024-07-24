@@ -4,9 +4,61 @@ class signUpPage {
 
     elements = {
 
+        getNameField: () => cy.get('[name="firstname"]'),
+        getLastNameField: () => cy.get('[name="lastname"]'),
+        getPhoneField: () => cy.get('[name="phone"]'),
+        getEmailField: () => cy.get('[name="email"]'),
+        getPasswordField: () => cy.get('[name="password"]'),
+        getPasswordConfirmField: () => cy.get('[name="confirmpassword"]'),
+        getAgreeTermsCheckBox: () => cy.get('[name="termsandconditions"]'),
         getSubmitRegisterButton : () => cy.contains('button', 'Registrarse'),
         getSuccessfulRegistrationMessage : () => cy.get('.alert > button.close > .cx-icon'),
 
+}
+/*
+static fieldsRequiredData = [
+    { method: 'getNameField', requiredMessage: 'Este campo es requerido' },
+    { method: 'getLastNameField', requiredMessage: 'Este campo es requerido'},
+    { method: 'getPhoneField', requiredMessage: 'Este campo es requerido' },
+    { method: 'getEmailField', requiredMessage: 'Este campo es requerido' },
+    { method: 'getPasswordField', requiredMessage: 'Este campo es requerido' },
+    { method: 'getAgreeTermsCheckBox', requiredMessage: 'Este campo es requerido' }
+]*/
+
+assertAllRequiredErrors(){
+    this.elements.getNameField().siblings('.control-invalid').should('contain', 'Este campo es requerido');
+    this.elements.getLastNameField().siblings('.control-invalid').should('contain', 'Este campo es requerido');
+    this.elements.getPhoneField().siblings('.control-invalid').should('contain', 'Este campo es requerido');
+    this.elements.getEmailField().siblings('.control-invalid').should('contain', 'Este campo es requerido');
+    this.elements.getPasswordField().siblings('.control-invalid').should('contain', 'Este campo es requerido');
+    this.elements.getAgreeTermsCheckBox().siblings('.control-invalid').should('contain', 'Este campo es requerido');
+}
+
+/*
+static fieldsInvalidData = [
+    { method: 'getNameField', invalidDataMessage: 'Dato no válido'},
+    { method: 'getLastNameField', invalidDataMessage: 'Dato no válido'},
+    { method: 'getPhoneField',invalidDataMessage: 'Este campo es requerido',},
+    { method: 'getEmailField', invalidDataMessage: 'El campo correo electrónico debe contener el siguiente formato usuario@dominio.com',},
+    { method: 'getPasswordField', invalidDataMessage: 'Debe contener al menos un número, una letra minúscula, una mayúscula, un caracter especial y 6 o más caracteres.'},
+    { method: 'getAgreeTermsCheckBox', invalidDataMessage: 'Este campo es requerido'}
+]*/
+
+enterInvalidData(){
+    this.elements.getNameField().type('111');
+    this.elements.getLastNameField().type('111');
+    this.elements.getPhoneField().type('aaa');
+    this.elements.getEmailField().type('userEmail');
+    this.elements.getPasswordField().type('111');
+}
+
+assertAllErrorFields(){
+    this.elements.getNameField().siblings('.control-invalid').should('contain', 'Dato no válido');
+    this.elements.getLastNameField().siblings('.control-invalid').should('contain', 'Dato no válido');
+    this.elements.getPhoneField().siblings('.control-invalid').should('contain', 'Dato no válido');
+    this.elements.getEmailField().siblings('.control-invalid').should('contain', 'El campo correo electrónico debe contener el siguiente formato usuario@dominio.com');
+    this.elements.getPasswordField().siblings('.control-invalid').should('contain', 'Debe contener al menos un número, una letra minúscula, una mayúscula, un caracter especial y 6 o más caracteres.');
+    //this.elements.getAgreeTermsCheckBox().siblings('.control-invalid').should('contain', 'Este campo es requerido');
 }
 
 generateCustomPassword(length) {
@@ -43,20 +95,18 @@ fillRegisterForm() {
     const userFirstName = faker.person.firstName();
     const userLastName = faker.person.lastName();
     const userPhone = this.generatePhone();
-   // const userPhone = faker.phone.imei();
     const userEmail = faker.internet.exampleEmail();
-    //const password = faker.internet.password({ length, pattern, prefix });
 
-    cy.get('[name="firstname"]').type(userFirstName);
-    cy.get('[name="lastname"]').type(userLastName);
-    cy.get('[name="phone"]').type(userPhone);
-    cy.get('[name="email"]').type(userEmail);
-    cy.get('[name="password"]').type(password);
-    cy.get('[name="confirmpassword"]').type(password);
+    this.elements.getNameField().type(userFirstName);
+    this.elements.getLastNameField().type(userLastName);
+    this.elements.getPhoneField().type(userPhone);
+    this.elements.getEmailField().type(userEmail);
+    this.elements.getPasswordField().type(password);
+    this.elements.getPasswordConfirmField().type(password);
 }
 
 agreeToTerms() {
-    cy.get('[name="termsandconditions"]').check();
+    this.elements.getAgreeTermsCheckBox().check();
 }
 
 submitSignUpForm() {
