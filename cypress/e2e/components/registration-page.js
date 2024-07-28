@@ -3,7 +3,6 @@ const { faker } = require('@faker-js/faker');
 class signUpPage {
 
     elements = {
-
         getNameField: () => cy.get('[name="firstname"]'),
         getLastNameField: () => cy.get('[name="lastname"]'),
         getPhoneField: () => cy.get('[name="phone"]'),
@@ -13,36 +12,21 @@ class signUpPage {
         getAgreeTermsCheckBox: () => cy.get('[name="termsandconditions"]'),
         getSubmitRegisterButton : () => cy.contains('button', 'Registrarse'),
         getSuccessfulRegistrationMessage : () => cy.get('.alert > button.close > .cx-icon'),
-
 }
-/*
-static fieldsRequiredData = [
-    { method: 'getNameField', requiredMessage: 'Este campo es requerido' },
-    { method: 'getLastNameField', requiredMessage: 'Este campo es requerido'},
-    { method: 'getPhoneField', requiredMessage: 'Este campo es requerido' },
-    { method: 'getEmailField', requiredMessage: 'Este campo es requerido' },
-    { method: 'getPasswordField', requiredMessage: 'Este campo es requerido' },
-    { method: 'getAgreeTermsCheckBox', requiredMessage: 'Este campo es requerido' }
-]*/
 
 assertAllRequiredErrors(){
-    this.elements.getNameField().siblings('.control-invalid').should('contain', 'Este campo es requerido');
-    this.elements.getLastNameField().siblings('.control-invalid').should('contain', 'Este campo es requerido');
-    this.elements.getPhoneField().siblings('.control-invalid').should('contain', 'Este campo es requerido');
-    this.elements.getEmailField().siblings('.control-invalid').should('contain', 'Este campo es requerido');
-    this.elements.getPasswordField().siblings('.control-invalid').should('contain', 'Este campo es requerido');
-    this.elements.getAgreeTermsCheckBox().siblings('.control-invalid').should('contain', 'Este campo es requerido');
+    this.elements.getNameField().siblings('.control-invalid').should('contain', errorMessage.required);
+    this.elements.getLastNameField().siblings('.control-invalid').should('contain', errorMessage.required);
+    this.elements.getPhoneField().siblings('.control-invalid').should('contain', errorMessage.required);
+    this.elements.getEmailField().siblings('.control-invalid').should('contain', errorMessage.required);
+    this.elements.getPasswordField().siblings('.control-invalid').should('contain', errorMessage.required);
+    this.elements.getAgreeTermsCheckBox().siblings('.control-invalid').should('contain', errorMessage.required);
 }
 
-/*
-static fieldsInvalidData = [
-    { method: 'getNameField', invalidDataMessage: 'Dato no válido'},
-    { method: 'getLastNameField', invalidDataMessage: 'Dato no válido'},
-    { method: 'getPhoneField',invalidDataMessage: 'Este campo es requerido',},
-    { method: 'getEmailField', invalidDataMessage: 'El campo correo electrónico debe contener el siguiente formato usuario@dominio.com',},
-    { method: 'getPasswordField', invalidDataMessage: 'Debe contener al menos un número, una letra minúscula, una mayúscula, un caracter especial y 6 o más caracteres.'},
-    { method: 'getAgreeTermsCheckBox', invalidDataMessage: 'Este campo es requerido'}
-]*/
+static errorMessage = {
+    required: 'Este campo es requerido',
+    invalid: 'Dato no válido'
+};
 
 enterInvalidData(){
     this.elements.getNameField().type('111');
@@ -53,12 +37,11 @@ enterInvalidData(){
 }
 
 assertAllErrorFields(){
-    this.elements.getNameField().siblings('.control-invalid').should('contain', 'Dato no válido');
-    this.elements.getLastNameField().siblings('.control-invalid').should('contain', 'Dato no válido');
-    this.elements.getPhoneField().siblings('.control-invalid').should('contain', 'Dato no válido');
+    this.elements.getNameField().siblings('.control-invalid').should('contain', errorMessage.invalid);
+    this.elements.getLastNameField().siblings('.control-invalid').should('contain', errorMessage.invalid);
+    this.elements.getPhoneField().siblings('.control-invalid').should('contain', errorMessage.invalid);
     this.elements.getEmailField().siblings('.control-invalid').should('contain', 'El campo correo electrónico debe contener el siguiente formato usuario@dominio.com');
     this.elements.getPasswordField().siblings('.control-invalid').should('contain', 'Debe contener al menos un número, una letra minúscula, una mayúscula, un caracter especial y 6 o más caracteres.');
-    //this.elements.getAgreeTermsCheckBox().siblings('.control-invalid').should('contain', 'Este campo es requerido');
 }
 
 generateCustomPassword(length) {
@@ -78,7 +61,6 @@ generatePassword() {
         faker.number.int(1),
         faker.helpers.arrayElement(['!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+']), 
     ].join('') + this.generateCustomPassword(6);
-  
     return password;
 }
 
