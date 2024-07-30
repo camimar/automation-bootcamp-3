@@ -8,7 +8,6 @@ describe('Casa Ideas - Homepage test suite', () => {
     beforeEach(() => {
       cy.visit('/');
       cy.acceptCookiesIfExists();
-      login.loginReturningUser();
     });
 
 
@@ -18,7 +17,15 @@ describe('Casa Ideas - Homepage test suite', () => {
       homePage.verifyNavbarElementsAreVisible();
     });
 
-    it('', () => {
-      
+    //TODO TC for Categories Dropdown functionality
+
+    it('TC_09: User is able to Access to Categories Link and visualize all product categories', () => {
+      const homePage = new HomePage()
+      login.clickHamburgerMenu();
+      homePage.elements.getCategoriesLink().should('be.visible').click();
+      homePage.verifyAllCategoriesAreVisible();
     });
+
+
+
 })

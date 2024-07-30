@@ -40,12 +40,14 @@ Cypress.Commands.add("getIfExists", (selector) => {
 })
 
 Cypress.Commands.add('acceptCookiesIfExists', () => {
-
-  cy.wait(1000)
-  cy.getIfExists('[class="btn btn-block btn-primary w-auto"]').then((element) => {
-      if (element != null) {
-          cy.get('[class="btn btn-block btn-primary w-auto"]').contains('Aceptar Cookies').click({force:true})
-      }
+  cy.wait(4000)
+  cy.getIfExists('[class="btn btn-block btn-primary w-auto"]').then(element => {
+    if (element != null) {
+      cy.log('Encontré el botón de cookies y voy a hacer clic en él');
+      cy.get('[class="btn btn-block btn-primary w-auto"]').contains('Aceptar Cookies').click({force: true});
+    } else {
+      cy.log('No encontré el botón de cookies');
+    }
   });
 
 
