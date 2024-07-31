@@ -10,8 +10,12 @@ describe('Casa Ideas - pruebas', () => {
     });
 
     it('TC_11: Verify product cards: user is able to see each cards price and image', () => {
-    products.verifyProductCardElements();
-    products.logProductNamesAndCount();
+        products.verifyProductCardElements();
+        products.logProductNamesAndCount();
+    });
+
+    it('TC_12: Product Search bar: user is able to search for a product', () => {
+        products.searchAndVerifyProduct('Maceta');
     });
 
 });
