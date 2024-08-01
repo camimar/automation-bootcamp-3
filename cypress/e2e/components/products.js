@@ -8,7 +8,12 @@ class products {
         getProductPrice: () => cy.get('.price:not(:empty), .price-discount:not(:empty)'),
         getSearchBar: () => cy.get('cx-searchbox'),
         getSearchResults: () => cy.get('#results'),
-        getResultsDisplayed: () => cy.get('em.search-results-highlight')
+        getResultsDisplayed: () => cy.get('em.search-results-highlight'),
+        getInvalidSearchMessage: () => cy.get('span[_ngcontent-serverapp-c238]'),
+        getHeartButton: () => cy.get('cx-icon.empty-heart'),
+        getWishListButton: () => cy.get('a[aria-label="Lista Deseos Link"]'),
+        getWishList: () => cy.get('ci-wish-list'),
+        getRemoveFavProductIcon: () => cy.get('cx-icon.trash'),
 
 }
 
@@ -53,6 +58,39 @@ class products {
   searchAndVerifyProduct(productName) {
       this.searchProduct(productName);
       this.verifySearchResults(productName);
+  }
+
+  verifyInvalidSearchResults() {
+    this.elements.getSearchBar()
+        .should('be.visible')
+        .click({ force: true })
+        .clear()
+        .type('akljasd', {delay: 100});
+        cy.wait(1000); 
+  }
+
+  addFavProduct() {
+    cy.contains('Balde de metal infantil').should('be.visible')
+    .parents('ci-product-card')
+    .as('productCard'); 
+    cy.get('@productCard').within(() => {
+    cy.wait(1000); 
+    this.elements.getHeartButton().click();
+    });
+  }
+
+  verifyAddedToWishList(){
+    this.elements.getWishListButton().click();
+    cy.url().should('contain', '/my-account/wishlist');
+    this.elements.getWishList().within(() => {
+      cy.contains('Balde de metal infantil').should('exist');
+    });
+  }
+
+  confirmRemovingProduct(){
+    cy.get('.ci-confirmation-modal__container').should('be.visible');
+    cy.contains('button', 'Aceptar').click();
+    cy.contains('h3', 'No hay productos en su lista de deseos todavía').should('be.visible');
   }
 
 
