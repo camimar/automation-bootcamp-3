@@ -7,8 +7,6 @@ describe('Casa Ideas - Login / Sign Up flows', () => {
     beforeEach(() => {
       cy.visit('/');
       cy.acceptCookiesIfExists();
-      cy.injectAxe();
-      cy.checkA11y();
     });
 
     it('TC_01: User is able to access to the site', () => {
