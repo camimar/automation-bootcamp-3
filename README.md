@@ -45,9 +45,12 @@ Please note that this repository is still under construction. Work is continuous
 ### Useful Links
 For more information about the tools and libraries used in this project, check out the following documentation:
 
-[Cypress Documentation](https://docs.cypress.io/guides/overview/why-cypress)
-[cypress-axe GitHub](https://github.com/component-driven/cypress-axe)
-[axe-core GitHub](https://github.com/dequelabs/axe-core)
-[Faker.js Documentation](https://fakerjs.dev/)
+-[Cypress Documentation](https://docs.cypress.io/guides/overview/why-cypress)
+
+-[cypress-axe GitHub](https://github.com/component-driven/cypress-axe)
+
+-[axe-core GitHub](https://github.com/dequelabs/axe-core)
+
+-[Faker.js Documentation](https://fakerjs.dev/)
 
 Thank you for visiting this project, and it is hoped that the information and tests provided here are useful!
