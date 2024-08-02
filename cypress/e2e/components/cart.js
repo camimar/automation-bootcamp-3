@@ -9,13 +9,20 @@ class Cart {
         getIncreaseQuantityButton: () => cy.get('button[aria-label="Add one more"]'),
         getQuantityInput: () => cy.get('input[aria-label="Quantity"]'),
         getDecreaseQuantityButton: () => cy.get('button[aria-label="Remove one"]'),
-
+        getOrderSummary: () => cy.get('ci-order-summary'),
+        getSubtotalValue: () => cy.get('ci-order-summary .cart-totals .row .value').first(),
+        getTotalValue: () => cy.get('ci-order-summary .cart-totals .row.total .value'),
+        getDiscountedPrice: () => cy.get('.price-discount'),
+        getPrice: () => cy.get('.cx-price'),
+        getCheckoutButton: () => cy.get('ci-order-summary button.btn-primary'),
+        getCheckOutScreen: () => cy.get('cx-checkout-progress-mobile-top')
 }
 
   addProductToCart() {
-    cy.contains('Carretilla de Metal').scrollIntoView().should('be.visible').parents('ci-product-card').within(() => {
+    cy.contains('Carretilla de Metal').scrollIntoView(cy.wait(1000)).should('be.visible').parents('ci-product-card').within(() => {
     cy.wait(1000); 
-      this.elements.getAddToCartButton().click({force: true});
+      this.elements.getAddToCartButton().as('addToCartButton'); 
+      cy.get('@addToCartButton').click({force: true}, { multiple: true });
       });
   }
 
@@ -38,6 +45,38 @@ class Cart {
     for (let i = 0; i < times; i++) {
       this.elements.getDecreaseQuantityButton().click().wait(500); 
     }
+  }
+
+  verifyPurchaseInCart(){
+    cy.wait(1000);
+    this.addProductToCart();
+    this.verifyProductIsInCart();
+    this.elements.getPrice().invoke('text').then((priceText) => {
+      const priceParts = priceText.split('  '); 
+      const priceDiscount = priceParts[1]; 
+      const finalPrice = priceDiscount.trim().replace(',', '').replace(' ', '');
+
+      this.elements.getSubtotalValue().invoke('text').then((subtotalText) => {
+        const subtotal = subtotalText.trim().replace(',', '').replace(' ', '');
+        expect(subtotal).to.equal(finalPrice);
+      });
+  
+      this.elements.getTotalValue().invoke('text').then((totalText) => {
+        const total = totalText.trim().replace(',', '').replace(' ', '');
+        expect(total).to.equal(finalPrice);
+      });
+    });
+  }
+
+  storeTotalValue() {
+    this.elements.getTotalValue().invoke('text').then((totalText) => {
+      const formattedTotal = totalText.trim();
+      cy.wrap(formattedTotal).as('formattedTotalValue');
+    });
+  }
+
+  clickOnCheckoutButton(){
+    this.elements.getCheckoutButton().click();
   }
 
 
