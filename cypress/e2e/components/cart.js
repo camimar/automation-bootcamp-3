@@ -12,23 +12,22 @@ class Cart {
         getOrderSummary: () => cy.get('ci-order-summary'),
         getSubtotalValue: () => cy.get('ci-order-summary .cart-totals .row .value').first(),
         getTotalValue: () => cy.get('ci-order-summary .cart-totals .row.total .value'),
-        getDiscountedPrice: () => cy.get('.price-discount'),
+        getDiscountedPrice: () => cy.get('.price'),
         getPrice: () => cy.get('.cx-price'),
         getCheckoutButton: () => cy.get('ci-order-summary button.btn-primary'),
         getCheckOutScreen: () => cy.get('cx-checkout-progress-mobile-top')
 }
 
   addProductToCart() {
-    cy.contains('Carretilla de Metal').scrollIntoView(cy.wait(1000)).should('be.visible').parents('ci-product-card').within(() => {
-    cy.wait(1000); 
-      this.elements.getAddToCartButton().as('addToCartButton'); 
-      cy.get('@addToCartButton').click({force: true}, { multiple: true });
-      });
+      cy.wait(1000)
+      cy.contains('Balde de metal infantil').scrollIntoView().should('be.visible')
+      .closest('ci-product-card')
+      .find('button').contains('Agregar al carro').click({ force: true });
   }
 
   verifyProductIsInCart(){
     this.elements.getCartModal().should('be.visible');
-    this.elements.getCartItem().contains('Carretilla de Metal').should('be.visible');
+    this.elements.getCartItem().contains('Balde de metal infantil').should('be.visible');
   }
 
   increaseProductQuantity(times) {
@@ -80,6 +79,12 @@ class Cart {
   }
 
 
+  fullPurchaseFlow() {
+    this.addProductToCart();
+    this.verifyProductIsInCart();
+    this.elements.getCheckoutButton().click();
+    this.elements.getCheckOutScreen().should('be.visible');
+  }
 }
 
 export default Cart;

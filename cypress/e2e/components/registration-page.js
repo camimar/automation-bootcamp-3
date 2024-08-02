@@ -79,7 +79,7 @@ fillRegisterForm() {
     const userPhone = this.generatePhone();
     const userEmail = faker.internet.exampleEmail();
 
-    this.elements.getNameField().type(userFirstName);
+    this.elements.getNameField().scrollIntoView().type(userFirstName);
     this.elements.getLastNameField().type(userLastName);
     this.elements.getPhoneField().type(userPhone);
     this.elements.getEmailField().type(userEmail);

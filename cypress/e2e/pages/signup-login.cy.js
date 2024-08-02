@@ -16,7 +16,6 @@ describe('Casa Ideas - Login / Sign Up flows', () => {
     });
 
     it('TC_02: User is able to click in Login button', () => {
-      //login.isLoginButtonVisibleEnabled();
       login.accessToLoginForm();
       cy.url().should('include', '/login');
     });

@@ -26,7 +26,7 @@ describe('Casa Ideas - Homepage test suite', () => {
       homePage.verifyAllCategoriesAreVisible();
     });
 
-    it.only('TC_10: User is able to select Jardin category and get redirected to /categoria/raiz/jardin-espacio', () => {
+    it('TC_10: User is able to select Jardin category and get redirected to /categoria/raiz/jardin-espacio', () => {
       login.clickHamburgerMenu();
       homePage.clickJardinCategory();
       homePage.verifyJardinUrl();

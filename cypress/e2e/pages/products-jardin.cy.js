@@ -1,7 +1,7 @@
 import login from '../components/login.js'
 import products from '../components/products.js';
 
-describe('Casa Ideas - pruebas', () => {
+describe('Casa Ideas - Products page testing flows', () => {
 
     beforeEach(() => {
       cy.visit('/categoria/raiz/jardin-espacio')
