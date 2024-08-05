@@ -12,7 +12,7 @@ beforeEach(() => {
     cy.acceptCookiesIfExists()
   });
 
-  it.only('TC_18: Checkout: User is able to add New address in Checkout form', () => {
+  it('TC_18: Checkout: User is able to add New address in Checkout form', () => {
     login.loginReturningUser();
     cart.fullPurchaseFlow();
     checkout.completeAdressCheckoutForm();

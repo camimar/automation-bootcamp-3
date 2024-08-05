@@ -15,18 +15,19 @@ class signUpPage {
 }
 
 assertAllRequiredErrors(){
-    this.elements.getNameField().siblings('.control-invalid').should('contain', errorMessage.required);
-    this.elements.getLastNameField().siblings('.control-invalid').should('contain', errorMessage.required);
-    this.elements.getPhoneField().siblings('.control-invalid').should('contain', errorMessage.required);
-    this.elements.getEmailField().siblings('.control-invalid').should('contain', errorMessage.required);
-    this.elements.getPasswordField().siblings('.control-invalid').should('contain', errorMessage.required);
-    this.elements.getAgreeTermsCheckBox().siblings('.control-invalid').should('contain', errorMessage.required);
+    this.elements.getNameField().siblings('.control-invalid').should('contain', this.errorMessage.required);
+    this.elements.getLastNameField().siblings('.control-invalid').should('contain', this.errorMessage.required);
+    this.elements.getPhoneField().siblings('.control-invalid').should('contain', this.errorMessage.required);
+    this.elements.getEmailField().siblings('.control-invalid').should('contain', this.errorMessage.required);
+    this.elements.getPasswordField().siblings('.control-invalid').should('contain', this.errorMessage.required);
+    this.elements.getAgreeTermsCheckBox().siblings('.control-invalid').should('contain', this.errorMessage.required);
 }
 
-static errorMessage = {
-    required: 'Este campo es requerido',
-    invalid: 'Dato no válido'
-};
+constructor() {
+    this.errorMessage = {
+        required: 'Este campo es requerido',
+        invalid: 'Dato no válido'
+}};
 
 enterInvalidData(){
     this.elements.getNameField().type('111');
@@ -37,9 +38,9 @@ enterInvalidData(){
 }
 
 assertAllErrorFields(){
-    this.elements.getNameField().siblings('.control-invalid').should('contain', errorMessage.invalid);
-    this.elements.getLastNameField().siblings('.control-invalid').should('contain', errorMessage.invalid);
-    this.elements.getPhoneField().siblings('.control-invalid').should('contain', errorMessage.invalid);
+    this.elements.getNameField().siblings('.control-invalid').should('contain', this.errorMessage.invalid);
+    this.elements.getLastNameField().siblings('.control-invalid').should('contain', this.errorMessage.invalid);
+    this.elements.getPhoneField().siblings('.control-invalid').should('contain', this.errorMessage.invalid);
     this.elements.getEmailField().siblings('.control-invalid').should('contain', 'El campo correo electrónico debe contener el siguiente formato usuario@dominio.com');
     this.elements.getPasswordField().siblings('.control-invalid').should('contain', 'Debe contener al menos un número, una letra minúscula, una mayúscula, un caracter especial y 6 o más caracteres.');
 }
