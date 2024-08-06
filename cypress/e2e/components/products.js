@@ -10,7 +10,7 @@ class products {
         getSearchResults: () => cy.get('#results'),
         getResultsDisplayed: () => cy.get('em.search-results-highlight'),
         getInvalidSearchMessage: () => cy.get('span[_ngcontent-serverapp-c238]'),
-        getHeartButton: () => cy.get('cx-icon.empty-heart'),
+        getHeartButton: () => cy.get('.empty-heart'),
         getWishListButton: () => cy.get('a[aria-label="Lista Deseos Link"]'),
         getWishList: () => cy.get('ci-wish-list'),
         getRemoveFavProductIcon: () => cy.get('cx-icon.trash'),
