@@ -19,10 +19,18 @@ class Cart {
 }
 
   addProductToCart() {
+<<<<<<< HEAD
       cy.wait(1000)
       cy.contains('Balde de metal infantil').scrollIntoView().should('be.visible')
       .closest('ci-product-card')
       .find('button').contains('Agregar al carro').click({ force: true });
+=======
+    cy.contains('Balde de metal infantil').scrollIntoView(cy.wait(1000)).should('be.visible').parents('ci-product-card').within(() => {
+    cy.wait(1000); 
+      this.elements.getAddToCartButton().as('addToCartButton'); 
+      cy.get('@addToCartButton').click({force: true}, { multiple: true });
+      });
+>>>>>>> feature/cart-testcases
   }
 
   verifyProductIsInCart(){
@@ -51,20 +59,18 @@ class Cart {
     this.addProductToCart();
     this.verifyProductIsInCart();
     this.elements.getPrice().invoke('text').then((priceText) => {
-      const priceParts = priceText.split('  '); 
-      const priceDiscount = priceParts[1]; 
-      const finalPrice = priceDiscount.trim().replace(',', '').replace(' ', '');
-
+      const finalPrice = priceText.trim().replace(',', '').replace(/\s/g, ''); 
+  
       this.elements.getSubtotalValue().invoke('text').then((subtotalText) => {
-        const subtotal = subtotalText.trim().replace(',', '').replace(' ', '');
+        const subtotal = subtotalText.trim().replace(',', '').replace(/\s/g, ''); 
         expect(subtotal).to.equal(finalPrice);
       });
-  
+    
       this.elements.getTotalValue().invoke('text').then((totalText) => {
-        const total = totalText.trim().replace(',', '').replace(' ', '');
+        const total = totalText.trim().replace(',', '').replace(/\s/g, '');
         expect(total).to.equal(finalPrice);
       });
-    });
+      });
   }
 
   storeTotalValue() {
