@@ -1,13 +1,13 @@
 # Automation Challenge with Cypress
 
 ## Introduction
-Welcome to the repository! This project is an automation challenge using Cypress, conducted as part of the third automation bootcamp at Apply Digital. The goal is to enhance learning experiences by tackling real-world scenarios and implementing best practices in test automation. Scenarios tested and TestCases can be found within the next link:
+Welcome to the repository! This project is an automation challenge using Cypress, as part of the third automation bootcamp at Apply Digital. The goal is to enhance learning automation experiences in real projects and implementing best practices in test automation. Scenarios tested and TestCases can be found within the next link:
 
 [Casaideas.mx Bootcamp automation challenge: TestCase repository](https://docs.google.com/spreadsheets/d/1A-iPVQRSYVnf0x6DexiQrjSCpNTn-rJx/edit?gid=1160423172#gid=1160423172)
 
 ## Project Coverage
 
-In this project, the main user flows of the website [Casa Ideas México](https://www.casaideas-mexico.mx/) have been automated. The aim was to cover essential functionalities that a typical user would interact with, providing a comprehensive test suite that ensures the website's reliability and performance.
+In this project, the main user flows of the website [Casa Ideas México](https://www.casaideas-mexico.mx/) have been automated. The aim was to cover essential functionalities that a typical user would interact with.
 
 ### Why POM?
 The Page Object Model (POM) design pattern has been utilized for the test scripts. POM helps in making the code more readable, maintainable, and reusable by separating the page structure from the test scripts. This approach allows for easy updates to tests in case of changes in the website's UI without rewriting the tests.
@@ -53,4 +53,4 @@ For more information about the tools and libraries used in this project, check o
 
 -[Faker.js Documentation](https://fakerjs.dev/)
 
-Thank you for visiting this project, and it is hoped that the information and tests provided here are useful!
+Thank you for visiting, hope that this information and tests provided are useful!
