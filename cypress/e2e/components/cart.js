@@ -19,18 +19,10 @@ class Cart {
 }
 
   addProductToCart() {
-<<<<<<< HEAD
       cy.wait(1000)
       cy.contains('Balde de metal infantil').scrollIntoView().should('be.visible')
       .closest('ci-product-card')
       .find('button').contains('Agregar al carro').click({ force: true });
-=======
-    cy.contains('Balde de metal infantil').scrollIntoView(cy.wait(1000)).should('be.visible').parents('ci-product-card').within(() => {
-    cy.wait(1000); 
-      this.elements.getAddToCartButton().as('addToCartButton'); 
-      cy.get('@addToCartButton').click({force: true}, { multiple: true });
-      });
->>>>>>> feature/cart-testcases
   }
 
   verifyProductIsInCart(){
