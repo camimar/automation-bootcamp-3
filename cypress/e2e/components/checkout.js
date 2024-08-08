@@ -15,7 +15,11 @@ class Checkout {
         getCheckout2ntStreetField: () => cy.get('[formcontrolname="street2"]'),  
         getCheckoutReferenceField: () => cy.get('[formcontrolname="reference"]'),
         getCheckoutZipField: () => cy.get('[formcontrolname="postalCode"]'),
-        getContinueButton: () => cy.contains('button', 'Continuar')
+        getContinueButton: () => cy.contains('button', 'Continuar'),
+        getEstadoField: () => cy.get('input[placeholder="Estado"]'),
+        getAlcaldiaField: () => cy.get('input[placeholder="Alcaldía"]'),
+        getColoniaField: () => cy.get('ng-select[formcontrolname="town"]'),
+        getAgregarNuevaDireccion: () => cy.contains('button', 'Agregar Nueva Dirección')
 }
 
 completeAdressCheckoutForm() {
@@ -47,6 +51,33 @@ continueCheckoutProcess() {
     this.elements.getContinueButton().click();
 }
 
+selectAndVerifyColoniaField() {
+    this.elements.getColoniaField().click();
+    cy.contains('.ng-option-label', 'Itzaes').should('be.visible').click({ force: true });
+}
+
+verifyRequiredFieldsErrors() {
+    const fields = [
+        this.elements.getNameCheckoutField,
+        this.elements.getCheckoutLastNameField,
+        this.elements.getCheckoutPhoneField,
+        this.elements.getCheckoutStreetField,
+        this.elements.getCheckoutExtNumField,
+        this.elements.getCheckoutIntNumField,
+        this.elements.getCheckout1stStreetField,
+        this.elements.getCheckout2ntStreetField,
+        this.elements.getCheckoutReferenceField,
+        this.elements.getCheckoutZipField,
+    ];
+
+    fields.forEach(fieldMethod => {
+        fieldMethod().then($field => {
+            if ($field.hasClass('ng-invalid')) {
+                cy.wrap($field).closest('.form-group').find('cx-form-errors').should('contain', 'Este campo es requerido');
+            }
+        });
+    });
+}
 
 }
 

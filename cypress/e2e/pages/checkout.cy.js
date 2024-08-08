@@ -15,22 +15,33 @@ beforeEach(() => {
   it('TC_18: Checkout: User is able to add New address in Checkout form', () => {
     login.loginReturningUser();
     cart.fullPurchaseFlow();
+    cy.url().should('contain', '/shipping-address');
+    checkout.elements.getAgregarNuevaDireccion().click();
     checkout.completeAdressCheckoutForm();
+    cy.wait(1000);
+    checkout.elements.getEstadoField().should('have.value', 'Yucatán');
+    checkout.elements.getAlcaldiaField().should('have.value', 'Mérida');
+    checkout.selectAndVerifyColoniaField();
     checkout.continueCheckoutProcess();
-    //TODO assert
+    cy.url().should('contain', '/delivery-mode');
   });
 
-  //TODO
 
   it('TC_18-1: User is not able to Continue without completing Address form fields in Checkout Screen', () => {
-    
-  });
-
-  it('TC_18-2: User is able to click on "Volver al Carrito" button, for getting back to cart', () => {
-    
+    login.loginReturningUser();
+    cart.fullPurchaseFlow();
+    cy.url().should('contain', '/shipping-address');
+    checkout.elements.getAgregarNuevaDireccion().click();
+    checkout.continueCheckoutProcess();
+    checkout.verifyRequiredFieldsErrors();
+    cy.url().should('contain', '/shipping-address');
   });
 
   it('TC_19: Checkout: User is able to select shipping method ', () => {
+    
+  });
+
+  it('TC_20: Checkout: User is able to select payment method ', () => {
     
   });
 
