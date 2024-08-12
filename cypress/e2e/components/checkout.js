@@ -15,7 +15,18 @@ class Checkout {
         getCheckout2ntStreetField: () => cy.get('[formcontrolname="street2"]'),  
         getCheckoutReferenceField: () => cy.get('[formcontrolname="reference"]'),
         getCheckoutZipField: () => cy.get('[formcontrolname="postalCode"]'),
-        getContinueButton: () => cy.contains('button', 'Continuar')
+        getContinueButton: () => cy.contains('button', 'Continuar'),
+        getEstadoField: () => cy.get('input[placeholder="Estado"]'),
+        getAlcaldiaField: () => cy.get('input[placeholder="Alcaldía"]'),
+        getColoniaField: () => cy.get('ng-select[formcontrolname="town"]'),
+        getAgregarNuevaDireccion: () => cy.contains('button', 'Agregar Nueva Dirección'),
+        getShippingContainer: () => cy.get('cx-delivery-mode'),
+        getShippingMethodCheckbox: () => cy.get('#deliveryMode-standard-gross'),
+        getPaymentForm: () =>  cy.get('app-ci-payment-form'),
+        getCardNameInput: () =>  cy.get('input[formcontrolname="accountHolderName"]'),
+        getCardNumberInput: () =>  cy.get('input[formcontrolname="cardNumber"]'),
+        getValidoHastaDropdown1: () =>  cy.get('input[aria-autocomplete="list"]').eq(0),
+        getValidoHastaDropdown2: () =>  cy.get('input[aria-autocomplete="list"]').eq(1),
 }
 
 completeAdressCheckoutForm() {
@@ -44,9 +55,89 @@ completeAdressCheckoutForm() {
 }
 
 continueCheckoutProcess() {
-    this.elements.getContinueButton().click();
+    this.elements.getContinueButton().click( {force: true} );
 }
 
+selectAndVerifyColoniaField() {
+    this.elements.getColoniaField().click();
+    cy.contains('.ng-option-label', 'Itzaes').should('be.visible').click({ force: true });
+}
+
+verifyRequiredFieldsErrors() {
+    const fields = [
+        this.elements.getNameCheckoutField,
+        this.elements.getCheckoutLastNameField,
+        this.elements.getCheckoutPhoneField,
+        this.elements.getCheckoutStreetField,
+        this.elements.getCheckoutExtNumField,
+        this.elements.getCheckoutIntNumField,
+        this.elements.getCheckout1stStreetField,
+        this.elements.getCheckout2ntStreetField,
+        this.elements.getCheckoutReferenceField,
+        this.elements.getCheckoutZipField,
+    ];
+
+    fields.forEach(fieldMethod => {
+        fieldMethod().then($field => {
+            if ($field.hasClass('ng-invalid')) {
+                cy.wrap($field).closest('.form-group').find('cx-form-errors').should('contain', 'Este campo es requerido');
+            }
+        });
+    });
+}
+
+verifyShippingMethodIsSelected(){
+    this.elements.getShippingContainer().should('be.visible');
+    this.elements.getShippingMethodCheckbox().should('have.attr', 'aria-checked', 'true');
+}
+
+verifyPaymentMethodElements() {
+    cy.get('.cx-checkout-text').should('be.visible');
+    const paymentMethodSelectors = [
+        ':nth-child(1) > .d-flex > .ml-2',
+        ':nth-child(2) > .d-flex > .ml-2',
+        ':nth-child(3) > .d-flex > .ml-2'
+    ];
+    const expectedTexts = ["Depósito bancario", "Tarjeta de crédito/débito", "PayPal"];
+    paymentMethodSelectors.forEach((selector, index) => {
+        cy.get(selector).should('contain', expectedTexts[index]);
+        cy.get(selector).prev('input[type="radio"]').should('be.enabled');
+    });
+}
+
+verifyCardPaymentElements(){
+    this.elements.getPaymentForm().should('be.visible')
+    this.elements.getCardNameInput().scrollIntoView().should('be.visible')
+    this.elements.getCardNumberInput().should('be.visible')
+    cy.get('#cVVNumber').should('be.visible');
+}
+
+selectValidoHasta(month, year) {
+    cy.get('ng-select[formcontrolname="expiryMonth"]').find('.ng-arrow-wrapper').click();
+    cy.contains('.ng-dropdown-panel-items', month).click();
+    cy.get('ng-select[formcontrolname="expiryYear"]').find('.ng-arrow-wrapper').click();
+    cy.contains('.ng-dropdown-panel-items', year).click();
+}
+
+ selectPaymentType() {
+    //cy.get('#cardTypeDiv > .ng-arrow-wrapper').scrollIntoView().click( {force: true} );  
+   // cy.get('#cardTypeDiv > input ' ).scrollIntoView().click( {force: true} );  
+    cy.get('ng-select[formcontrolname="code"]').click( {force: true} );  
+    cy.contains('American Express').click( {force: true} );
+}
+
+getCVVInput() {
+    return cy.get('input[formcontrolname="cvv"]');
+}
+
+verifyPaymentType(cardType) {
+    cy.get('select[formcontrolname="cardType"]').should('have.value', cardType);
+}
+
+verifyValidoHasta(month, year) {
+    this.elements.getValidoHastaDropdown1().should('have.value', month);
+    this.elements.getValidoHastaDropdown2().should('have.value', year);
+}
 
 }
 

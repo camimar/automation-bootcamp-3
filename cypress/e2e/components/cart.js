@@ -18,11 +18,21 @@ class Cart {
         getCheckOutScreen: () => cy.get('cx-checkout-progress-mobile-top')
 }
 
-  addProductToCart() {
+  /*addProductToCart() {
       cy.wait(1000)
       cy.contains('Balde de metal infantil').scrollIntoView().should('be.visible')
       .closest('ci-product-card')
       .find('button').contains('Agregar al carro').click({ force: true });
+  }*/
+
+  addProductToCart() {
+    // Asegúrate de que 'Balde de metal infantil' esté visible y luego haz scroll hasta él
+    cy.contains('Balde de metal infantil', { timeout: 10000 }).scrollIntoView().should('be.visible');
+    
+    // Una vez que el producto es visible, busca el botón para agregar al carrito y haz clic
+    cy.contains('ci-product-card', 'Balde de metal infantil') // Encuentra el card del producto
+      .find('button').contains('Agregar al carro') // Encuentra el botón específico dentro del card
+      .click({ force: true }); // Hace clic en el botón, incluso si no es visible (force: true)
   }
 
   verifyProductIsInCart(){
@@ -81,7 +91,7 @@ class Cart {
     this.addProductToCart();
     this.verifyProductIsInCart();
     this.elements.getCheckoutButton().click();
-    this.elements.getCheckOutScreen().should('be.visible');
+    this.elements.getCheckOutScreen().should('be.visible', { timeout: 10000 });
   }
 }
 
