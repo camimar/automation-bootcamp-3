@@ -26,13 +26,11 @@ class Cart {
   }*/
 
   addProductToCart() {
-    // Asegúrate de que 'Balde de metal infantil' esté visible y luego haz scroll hasta él
+   
     cy.contains('Balde de metal infantil', { timeout: 10000 }).scrollIntoView().should('be.visible');
-    
-    // Una vez que el producto es visible, busca el botón para agregar al carrito y haz clic
-    cy.contains('ci-product-card', 'Balde de metal infantil') // Encuentra el card del producto
-      .find('button').contains('Agregar al carro') // Encuentra el botón específico dentro del card
-      .click({ force: true }); // Hace clic en el botón, incluso si no es visible (force: true)
+    cy.contains('ci-product-card', 'Balde de metal infantil') 
+      .find('button').contains('Agregar al carro') 
+      .click({ force: true }); 
   }
 
   verifyProductIsInCart(){

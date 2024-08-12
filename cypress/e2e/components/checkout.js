@@ -120,8 +120,6 @@ selectValidoHasta(month, year) {
 }
 
  selectPaymentType() {
-    //cy.get('#cardTypeDiv > .ng-arrow-wrapper').scrollIntoView().click( {force: true} );  
-   // cy.get('#cardTypeDiv > input ' ).scrollIntoView().click( {force: true} );  
     cy.get('ng-select[formcontrolname="code"]').click( {force: true} );  
     cy.contains('American Express').click( {force: true} );
 }
