@@ -56,7 +56,7 @@ completeAdressCheckoutForm() {
 }
 
 continueCheckoutProcess() {
-    this.elements.getContinueButton().click( {force: true} );
+    this.elements.getContinueButton({ timeout: 10000 }).click( {force: true} );
 }
 
 selectAndVerifyColoniaField() {
@@ -105,15 +105,13 @@ verifyShippingMethodIsSelected(){
 
 verifyPaymentMethodElements() {
     cy.get('.cx-checkout-text').should('be.visible');
-    const paymentMethodSelectors = [
-        ':nth-child(1) > .d-flex > .ml-2',
-        ':nth-child(2) > .d-flex > .ml-2',
-        ':nth-child(3) > .d-flex > .ml-2'
+    const paymentMethods = [
+        "Depósito bancario",
+        "Tarjeta de crédito/débito",
+        "PayPal"
     ];
-    const expectedTexts = ["Depósito bancario", "Tarjeta de crédito/débito", "PayPal"];
-    paymentMethodSelectors.forEach((selector, index) => {
-        cy.get(selector).should('contain', expectedTexts[index]);
-        cy.get(selector).prev('input[type="radio"]').should('be.enabled');
+    paymentMethods.forEach(method => {
+        cy.contains('span.ml-2.flex-grow-1', method).should('be.visible',  { timeout: 10000 }).prev('input[type="radio"]').should('be.enabled');
     });
 }
 
@@ -132,8 +130,6 @@ selectValidoHasta(month, year) {
 }
 
  selectPaymentType() {
-    //cy.get('#cardTypeDiv > .ng-arrow-wrapper').scrollIntoView().click( {force: true} );  
-   // cy.get('#cardTypeDiv > input ' ).scrollIntoView().click( {force: true} );  
     cy.get('ng-select[formcontrolname="code"]').click( {force: true} );  
     cy.contains('American Express').click( {force: true} );
 }

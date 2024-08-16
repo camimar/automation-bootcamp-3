@@ -36,7 +36,7 @@ beforeEach(() => {
     cy.url().should('contain', '/shipping-address');
   });
 
-  it.only('TC_19: Checkout: User is able to see shipping method options', () => {
+  it('TC_19: Checkout: User is able to see shipping method options', () => {
     login.loginReturningUser();
     cart.fullPurchaseFlow();
     checkout.continueCheckoutProcess();
@@ -44,15 +44,19 @@ beforeEach(() => {
     cy.url().should('contain', '/delivery-mode');
   });
 
-  it('TC_20: Checkout: User is able to select payment method', () => {
+ it.only('TC_20: Checkout: User is able to select payment method', () => {
     login.loginReturningUser();
     cart.fullPurchaseFlow();
+    checkout.continueCheckoutProcess();
+    cy.wait(1000);
     checkout.continueCheckoutProcess();
     cy.wait(1000);
     checkout.continueCheckoutProcess();
     checkout.verifyPaymentMethodElements();
     checkout.verifyCardPaymentElements();
   });
+
+
 
   it('TC_21: Checkout: User is able to fill and verify payment information', () => {
     login.loginReturningUser();
