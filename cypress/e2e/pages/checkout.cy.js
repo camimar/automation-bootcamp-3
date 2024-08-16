@@ -36,7 +36,7 @@ beforeEach(() => {
     cy.url().should('contain', '/shipping-address');
   });
 
-  it('TC_19: Checkout: User is able to see shipping method options', () => {
+  it.only('TC_19: Checkout: User is able to see shipping method options', () => {
     login.loginReturningUser();
     cart.fullPurchaseFlow();
     checkout.continueCheckoutProcess();
@@ -54,7 +54,7 @@ beforeEach(() => {
     checkout.verifyCardPaymentElements();
   });
 
-  it.only('TC_21: Checkout: User is able to fill and verify payment information', () => {
+  it('TC_21: Checkout: User is able to fill and verify payment information', () => {
     login.loginReturningUser();
     cart.fullPurchaseFlow();
     checkout.continueCheckoutProcess();

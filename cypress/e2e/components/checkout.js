@@ -21,7 +21,8 @@ class Checkout {
         getColoniaField: () => cy.get('ng-select[formcontrolname="town"]'),
         getAgregarNuevaDireccion: () => cy.contains('button', 'Agregar Nueva Dirección'),
         getShippingContainer: () => cy.get('cx-delivery-mode'),
-        getShippingMethodCheckbox: () => cy.get('#deliveryMode-standard-gross'),
+        getPaidShippingMethodCheckbox: () => cy.get('#deliveryMode-standard-gross'),
+        getFreeShippingMethodCheckbox: () => cy.get('#deliveryMode-free-standard-shipping'),
         getPaymentForm: () =>  cy.get('app-ci-payment-form'),
         getCardNameInput: () =>  cy.get('input[formcontrolname="accountHolderName"]'),
         getCardNumberInput: () =>  cy.get('input[formcontrolname="cardNumber"]'),
@@ -88,7 +89,18 @@ verifyRequiredFieldsErrors() {
 
 verifyShippingMethodIsSelected(){
     this.elements.getShippingContainer().should('be.visible');
-    this.elements.getShippingMethodCheckbox().should('have.attr', 'aria-checked', 'true');
+    cy.get('input[aria-label="Quantity"]', {timeout: 10000}).should('be.visible')
+    .invoke('val')
+    .then((value) => {
+        cy.log('Texto obtenido:', value);
+        const itemCount = parseInt(value, 10);
+        cy.log('Número de ítems:', itemCount);
+        if (itemCount >= 3) {
+            this.elements.getFreeShippingMethodCheckbox().should('have.attr', 'aria-checked', 'true');
+        } else {
+            this.elements.getPaidShippingMethodCheckbox().should('have.attr', 'aria-checked', 'true');
+        }
+    });
 }
 
 verifyPaymentMethodElements() {
