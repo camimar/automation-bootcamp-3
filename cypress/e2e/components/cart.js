@@ -18,17 +18,15 @@ class Cart {
         getCheckOutScreen: () => cy.get('cx-checkout-progress-mobile-top')
 }
 
-  /*addProductToCart() {
-      cy.wait(1000)
-      cy.contains('Balde de metal infantil').scrollIntoView().should('be.visible')
-      .closest('ci-product-card')
-      .find('button').contains('Agregar al carro').click({ force: true });
-  }*/
-
   addProductToCart() {
+<<<<<<< HEAD
    
     cy.contains('Balde de metal infantil', { timeout: 10000 }).scrollIntoView().should('be.visible');
     cy.contains('ci-product-card', 'Balde de metal infantil') 
+=======
+    cy.contains('Balde de metal infantil', { timeout: 10000 }).scrollIntoView().should('be.visible');
+    cy.contains('ci-product-card', 'Balde de metal infantil')
+>>>>>>> feature/checkout-testcases
       .find('button').contains('Agregar al carro') 
       .click({ force: true }); 
   }

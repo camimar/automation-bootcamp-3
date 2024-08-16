@@ -44,9 +44,11 @@ beforeEach(() => {
     cy.url().should('contain', '/delivery-mode');
   });
 
-  it('TC_20: Checkout: User is able to select payment method', () => {
+ it.only('TC_20: Checkout: User is able to select payment method', () => {
     login.loginReturningUser();
     cart.fullPurchaseFlow();
+    checkout.continueCheckoutProcess();
+    cy.wait(1000);
     checkout.continueCheckoutProcess();
     cy.wait(1000);
     checkout.continueCheckoutProcess();
@@ -54,6 +56,11 @@ beforeEach(() => {
     checkout.verifyCardPaymentElements();
   });
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> feature/checkout-testcases
   it('TC_21: Checkout: User is able to fill and verify payment information', () => {
     login.loginReturningUser();
     cart.fullPurchaseFlow();
