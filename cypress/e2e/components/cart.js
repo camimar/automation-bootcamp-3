@@ -51,20 +51,18 @@ class Cart {
     this.addProductToCart();
     this.verifyProductIsInCart();
     this.elements.getPrice().invoke('text').then((priceText) => {
-      const priceParts = priceText.split('  '); 
-      const priceDiscount = priceParts[1]; 
-      const finalPrice = priceDiscount.trim().replace(',', '').replace(' ', '');
-
+      const finalPrice = priceText.trim().replace(',', '').replace(/\s/g, ''); 
+  
       this.elements.getSubtotalValue().invoke('text').then((subtotalText) => {
-        const subtotal = subtotalText.trim().replace(',', '').replace(' ', '');
+        const subtotal = subtotalText.trim().replace(',', '').replace(/\s/g, ''); 
         expect(subtotal).to.equal(finalPrice);
       });
-  
+    
       this.elements.getTotalValue().invoke('text').then((totalText) => {
-        const total = totalText.trim().replace(',', '').replace(' ', '');
+        const total = totalText.trim().replace(',', '').replace(/\s/g, '');
         expect(total).to.equal(finalPrice);
       });
-    });
+      });
   }
 
   storeTotalValue() {
