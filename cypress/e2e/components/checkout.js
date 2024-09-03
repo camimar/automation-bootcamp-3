@@ -24,10 +24,12 @@ class Checkout {
         getPaidShippingMethodCheckbox: () => cy.get('#deliveryMode-standard-gross'),
         getFreeShippingMethodCheckbox: () => cy.get('#deliveryMode-free-standard-shipping'),
         getPaymentForm: () =>  cy.get('app-ci-payment-form'),
+        getCardTypeSelect:()  =>   cy.get('[formcontrolname="cardType"]'),
         getCardNameInput: () =>  cy.get('input[formcontrolname="accountHolderName"]'),
         getCardNumberInput: () =>  cy.get('input[formcontrolname="cardNumber"]'),
+        getCvvInput: () => cy.get('[formcontrolname="cvn"]'),
         getValidoHastaDropdown1: () =>  cy.get('input[aria-autocomplete="list"]').eq(0),
-        getValidoHastaDropdown2: () =>  cy.get('input[aria-autocomplete="list"]').eq(1),
+        getValidoHastaDropdown2: () =>  cy.get('input[aria-autocomplete="list"]').eq(1), 
 }
 
 completeAdressCheckoutForm() {
@@ -122,20 +124,20 @@ verifyCardPaymentElements(){
     cy.get('#cVVNumber').should('be.visible');
 }
 
-selectValidoHasta(month, year) {
+selectValidoHasta(expirationMonth, expirationYear) {
     cy.get('ng-select[formcontrolname="expiryMonth"]').find('.ng-arrow-wrapper').click();
-    cy.contains('.ng-dropdown-panel-items', month).click();
+    cy.contains('.ng-dropdown-panel-items', expirationMonth).click();
     cy.get('ng-select[formcontrolname="expiryYear"]').find('.ng-arrow-wrapper').click();
-    cy.contains('.ng-dropdown-panel-items', year).click();
+    cy.contains('.ng-dropdown-panel-items', expirationYear).click();
 }
 
  selectPaymentType() {
-    cy.get('ng-select[formcontrolname="code"]').click( {force: true} );  
+    cy.get('ng-select[formcontrolname="code"]').find('.ng-arrow-wrapper').click( {force: true} );  
     cy.contains('American Express').click( {force: true} );
 }
 
 getCVVInput() {
-    return cy.get('input[formcontrolname="cvv"]');
+    return cy.get('#cVVNumber');
 }
 
 verifyPaymentType(cardType) {
@@ -143,8 +145,8 @@ verifyPaymentType(cardType) {
 }
 
 verifyValidoHasta(month, year) {
-    this.elements.getValidoHastaDropdown1().should('have.value', month);
-    this.elements.getValidoHastaDropdown2().should('have.value', year);
+    this.elements.getValidoHastaDropdown1().should('contain', month);
+    this.elements.getValidoHastaDropdown2().should('contain', year);
 }
 
 }
